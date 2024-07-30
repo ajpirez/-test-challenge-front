@@ -1,0 +1,25 @@
+@import 'mixins';
+
+h1 {
+  @include font-size(32);
+}
+
+h2 {
+  @include font-size(24);
+}
+
+h3 {
+  @include font-size(20);
+}
+
+h4 {
+  @include font-size(18);
+}
+
+h5 {
+  @include font-size(16);
+}
+
+h6 {
+  @include font-size(14);
+}

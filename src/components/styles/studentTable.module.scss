@@ -1,0 +1,68 @@
+.tableContainer {
+  margin: 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.employeeTable {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  td {
+    button {
+      padding: 8px;
+      border-radius: 4px;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .edit {
+      background-color: #f39c12;
+      margin-right: 8px;
+    }
+
+    .delete {
+      background-color: #e74c3c;
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+
+  .pages {
+    display: flex;
+    gap: 8px;
+
+    button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      background-color: #ecf0f1;
+
+      &.active {
+        background-color: #3498db;
+        color: white;
+      }
+    }
+  }
+}

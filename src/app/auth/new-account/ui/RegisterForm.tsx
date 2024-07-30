@@ -9,8 +9,10 @@ import styles from "../ui/styles/RegisterForm.module.scss";
 import {User} from "@/lib/interfaces/userLogin.interface";
 import {customRevalidateTag} from "@/lib/actions/helpers";
 import {ModalContext} from "@/components/providers/Providers";
+import {editUser} from "@/lib/actions/auth/edit";
 
 type FormInputs = {
+    id?: string
     firstName: string
     lastName: string
     email: string
@@ -19,11 +21,13 @@ type FormInputs = {
     grade: number
 }
 
-const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register', externalData?: User }) => {
+const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register', externalData?: User | null }) => {
+
     const {setModalOpen} = useContext(ModalContext)
     const [errorMessage, setErrorMessage] = useState("")
     const {register, handleSubmit, watch, reset, formState: {errors}} = useForm<FormInputs>({
         defaultValues: {
+            id: externalData?._id || '',
             firstName: externalData?.firstName || '',
             lastName: externalData?.lastName || '',
             email: externalData?.email || '',
@@ -36,6 +40,7 @@ const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register'
     useEffect(() => {
         if (externalData) {
             reset({
+                id: externalData?._id || '',
                 firstName: externalData?.firstName || '',
                 lastName: externalData?.lastName || '',
                 email: externalData?.email || '',
@@ -50,8 +55,15 @@ const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register'
 
     const onSubmit: SubmitHandler<FormInputs> = async (data: FormInputs) => {
         setErrorMessage('')
-        const {firstName, lastName, email, password, age, grade} = data
-        const resp = await registerUser(firstName, lastName, email, password, age, grade)
+        const {id, firstName, lastName, email, password, age, grade} = data
+
+        const action = {
+            add: () => registerUser(firstName, lastName, email, password, age, grade),
+            edit: () => editUser(id!, firstName, lastName, age, grade),
+            register: () => registerUser(firstName, lastName, email, password, age, grade),
+        }
+
+        const resp = await action[type as keyof typeof action]()
         if (!resp.ok) {
             setErrorMessage(resp.message)
             return
@@ -86,20 +98,25 @@ const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register'
                     {...register("lastName", {required: false, minLength: 3})}
                 />
 
-                <label htmlFor="email">Correo electrónico</label>
-                <input
-                    className={`${styles.input} ${errors.email ? styles.error : ''} `}
-                    type="email"
-                    {...register("email", {required: true, pattern: /^\S+@\S+$/i})}
-                />
+                {
+                    type !== 'edit' && (
+                        <>
+                            <label htmlFor="email">Correo electrónico</label>
+                            <input
+                                className={`${styles.input} ${errors.email ? styles.error : ''} `}
+                                type="email"
+                                {...register("email", {required: true, pattern: /^\S+@\S+$/i})}
+                            />
+                            <label htmlFor="password">Contraseña</label>
+                            <input
+                                className={`${styles.input} ${errors.password ? styles.error : ''} `}
+                                type="password"
+                                {...register("password", {required: true, minLength: 3})}
+                            />
+                        </>
+                    )
+                }
 
-
-                <label htmlFor="password">Contraseña</label>
-                <input
-                    className={`${styles.input} ${errors.password ? styles.error : ''} `}
-                    type="password"
-                    {...register("password", {required: true, minLength: 3})}
-                />
                 <label htmlFor="age">Edad</label>
                 <input
                     className={`${styles.input} ${errors.age ? styles.error : ''} `}

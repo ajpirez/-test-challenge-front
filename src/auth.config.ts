@@ -20,7 +20,6 @@ export const authConfig: NextAuthConfig = {
     },
     callbacks: {
         authorized({auth, request: {nextUrl}}) {
-            console.log('entro')
             const isLoggedIn = !!auth?.user;
             const isAdmin = auth?.user?.rols?.includes('admin');
             const isAnAuthenticatedRoute = authenticatedRoutes.includes(nextUrl.pathname)
@@ -36,7 +35,6 @@ export const authConfig: NextAuthConfig = {
             return true;
         },
         jwt: async ({token, user}) => {
-            console.log('jwt')
             if (user) token.data = user
             return token
         },
@@ -54,20 +52,7 @@ export const authConfig: NextAuthConfig = {
                 if (!parsedCredentials.success) return null
 
                 const {email, password} = parsedCredentials.data
-                //llamar server action
-                console.log({email, password})
                 const data = await loginUser({email, password})
-                console.log({data})
-
-                // const user = await prisma.user.findUnique({
-                //     where: {
-                //         email: email.toLowerCase()
-                //     }
-                // })
-                // if (!user) return null
-                // if (!bcryptjs.compareSync(password, user.password)) return null
-
-                // const {password: _, ...rest} = user
                 const {user, token} = data
                 return {...user, access_token: token}
             },

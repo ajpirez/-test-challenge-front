@@ -1,29 +1,20 @@
 'use server'
 
 
-export const registerUser = async (name:string, email:string, password:string) => {
+import {RegisterUser} from "@/lib/actions/auth";
+
+export const registerUser = async (firstName: string, lastName: string, email: string, password: string, age: number, grade: number) => {
     try {
-        //server action create user
-        // const user = await prisma.user.create({
-        //     data: {
-        //         name,
-        //         email,
-        //         password: await bcryptjs.hash(password, 10),
-        //     },
-        //     select:{
-        //         id: true,
-        //         name: true,
-        //         email: true
-        //     }
-        // })
+        const user = await RegisterUser({firstName, lastName, email, password, age, grade})
+
         return {
             ok: true,
-            // user,
+            user,
             message: 'Usuario creado correctamente.'
         }
-    }catch (error){
-        return{
-            ok:false,
+    } catch (error) {
+        return {
+            ok: false,
             message: "No se pudo crear el usuario."
         }
     }

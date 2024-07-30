@@ -11,7 +11,6 @@ export default async function Page(props: { params: {}; searchParams: { page: st
         limit: +checkPositiveInteger(props.searchParams.page, 10, 100, '10'),
     })
 
-    console.log(users)
     return (
         <main>
             <HandleSignOut status={users?.status ?? 200}/>

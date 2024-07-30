@@ -5,6 +5,7 @@ import {useFormState, useFormStatus} from 'react-dom'
 import {useEffect, useState} from "react"
 import {useRouter} from "next/navigation";
 import {authenticate} from "@/lib/actions/auth/login";
+import styles from './styles/LoginForm.module.scss'
 
 const LoginForm = () => {
     const router = useRouter()
@@ -20,23 +21,24 @@ const LoginForm = () => {
 
     return (
         <form action={dispatch}
-              className="flex flex-col">
+              className={styles.form}>
 
             <label htmlFor="email">Correo electrónico</label>
             <input
-                className="px-5 py-2 border bg-gray-200 rounded mb-5"
+                className={styles.input}
                 type="email"
                 id="email"
                 name="email"
             />
 
             <label htmlFor="password">Contraseña</label>
-            <div className="relative">
-                <button className="absolute top-2 right-8"
-                        type="button"
-                        onClick={() => setShowPassword(show => !show)}>{showPassword ? 'hidde' : 'show'}</button>
+            <div className={styles.passdiv}>
+                <button
+                    className={styles.button}
+                    type="button"
+                    onClick={() => setShowPassword(show => !show)}>{showPassword ? 'hidde' : 'show'}</button>
                 <input
-                    className="px-5 py-2 border bg-gray-200 rounded mb-5"
+                    className={styles.input}
                     type={showPassword ? 'text' : 'password'}
                     id="password"
                     name="password"
@@ -44,7 +46,7 @@ const LoginForm = () => {
             </div>
 
             <div
-                className="flex h-8 items-end space-x-1"
+                className={styles.divCredentials}
                 aria-live="polite"
                 aria-atomic="true"
             >
@@ -60,15 +62,15 @@ const LoginForm = () => {
 
 
             {/* divisor l ine */}
-            <div className="flex items-center my-5">
-                <div className="flex-1 border-t border-gray-500"></div>
-                <div className="px-2 text-gray-800">O</div>
-                <div className="flex-1 border-t border-gray-500"></div>
+            <div className={styles.divider}>
+                <div></div>
+                <div>O</div>
+                <div></div>
             </div>
 
             <Link
                 href="/auth/new-account"
-                className="btn-secondary text-center">
+                className={styles.buttonIngresar}>
                 Crear una nueva cuenta
             </Link>
 
@@ -84,11 +86,7 @@ function PendingButton() {
     return (
         <button
             type="submit"
-            /*className={clsx({
-                    "btn-primary": !pending,
-                    "btn-disabled": pending
-                }
-            )}*/
+            className={`${pending ? styles.secondary : styles.primary}`}
             disabled={pending}
         >
             Ingresar

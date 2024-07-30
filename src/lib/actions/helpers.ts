@@ -6,8 +6,6 @@ import {auth} from "@/auth.config";
 export const getToken = async () => {
   try {
     const session = await auth()
-    console.log({session})
-
     //@ts-ignore
     return session?.user.access_token;
   } catch (e) {

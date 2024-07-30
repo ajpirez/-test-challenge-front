@@ -1,5 +1,5 @@
 import { CustomHeaders } from '@/lib/actions/helpers';
-import {userLogin} from "@/lib/interfaces/userLogin.interface";
+import {User, userLogin} from "@/lib/interfaces/userLogin.interface";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -19,8 +19,29 @@ export const loginUser = async ({ email, password }: { email: string; password: 
       throw resp.error.message;
     }
     const data = await res.json();
-    console.log({data})
     return data as userLogin;
+  } catch (error) {
+    throw new Error('error');
+  }
+};
+
+
+export const RegisterUser = async ({ firstName,lastName,email, password,age,grade }: {firstName: string, lastName: string, email: string, password: string, age: number, grade: number }) => {
+  try {
+    const requestOptions = await CustomHeaders({
+      method: 'POST',
+      body: JSON.stringify({ firstName,lastName,email, password,age,grade}),
+      contentType: 'application/json',
+      isSecurePath: false,
+    });
+
+    const res = await fetch(`${BASE_URL}/v1/api/auth/signup`, requestOptions);
+    if (!res.ok) {
+      const resp = await res.json();
+      throw resp.error.message;
+    }
+    const data = await res.json();
+    return data as User;
   } catch (error) {
     throw new Error('error');
   }

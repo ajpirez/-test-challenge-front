@@ -1,8 +1,9 @@
 import styles from '../styles/studentTable.module.scss';
 import {Element} from "@/lib/interfaces/userResponse";
-import {PaginationResult} from "@/lib/interfaces/userResponse";
 
 const EmployeeTable = async ({users}: { users: Element[] }) => {
+
+
     return (
         <div className={styles.tableContainer}>
             <table className={styles.employeeTable}>

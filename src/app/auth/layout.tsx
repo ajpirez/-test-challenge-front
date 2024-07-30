@@ -1,6 +1,7 @@
 import React from 'react';
 import {auth} from "@/auth.config";
 import {redirect} from "next/navigation";
+import styles from './layout.module.scss'
 
 const ShopLayout = async ({children}:{children: React.ReactNode}) => {
     const session = await auth()
@@ -8,8 +9,8 @@ const ShopLayout = async ({children}:{children: React.ReactNode}) => {
         redirect('/')
     }
     return (
-      <main className='flex justify-center'>
-          <div className='w-full sm:w-[350px] px-10'>
+      <main className={styles.container}>
+          <div className={styles.div}>
               {children}
           </div>
       </main>

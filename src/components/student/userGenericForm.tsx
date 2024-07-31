@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import {registerUser} from "@/lib/actions/auth/register";
 import {login} from "@/lib/actions/auth/login";
 import styles from "../styles/UserGenericForm.module.scss";
@@ -32,6 +32,8 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
     const {setModalOpen} = useContext(ModalContext)
 
     const {setLoading} = useContext(LoaderContext)
+
+    const [showPassword, setShowPassword] = useState(false)
 
 
 
@@ -128,11 +130,18 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
                                 {...register("email", {required: true, pattern: /^\S+@\S+$/i})}
                             />
                             <label htmlFor="password">Contraseña</label>
-                            <input
-                                className={`${styles.input} ${errors.password ? styles.error : ''} `}
-                                type="password"
-                                {...register("password", {required: true, minLength: 3})}
-                            />
+                            <div className={styles.passdiv}>
+                                <button
+                                    className={styles.button}
+                                    type="button"
+                                    onClick={() => setShowPassword(show => !show)}>{showPassword ? 'hidde' : 'show'}</button>
+                                <input
+                                    className={`${styles.input} ${errors.password ? styles.error : ''} `}
+                                    type={showPassword ? 'text' : 'password'}
+                                    id="password"
+                                    {...register("password", {required: true, minLength: 3})}
+                                />
+                            </div>
                         </>
                     )
                 }

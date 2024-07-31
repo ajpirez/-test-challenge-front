@@ -3,7 +3,6 @@
 import Link from "next/link";
 import {useFormState, useFormStatus} from 'react-dom'
 import {useContext, useEffect, useState} from "react"
-import {useRouter} from "next/navigation";
 import {authenticate} from "@/lib/actions/auth/login";
 import styles from './styles/LoginForm.module.scss'
 import {ErrorContext} from "@/components/providers/Providers";

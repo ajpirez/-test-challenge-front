@@ -37,9 +37,12 @@ export const Pagination = ({totalPages, totalElements, lastPage}: { totalPages: 
         return `${pathName}?${params.toString()}`;
     };
 
+    console.log(totalElements)
+    console.log(currentPage)
+
     return (
         <div className={styles.pagination}>
-            <span>Showing <span className={styles.num}>{totalElements}</span> out of <span className={styles.num}>{totalPages}</span> entries</span>
+            <span>Showing <span className={styles.num}>{((currentPage - 1) * 10) + totalElements}</span> out of <span className={styles.num}>{totalPages}</span> entries</span>
             <div className={styles.pages}>
                 <Link href={createPageUrl(currentPage - 1)}>Previous</Link>
                 {allPages.map((page, index) => (

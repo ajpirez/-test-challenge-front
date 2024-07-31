@@ -1,23 +1,35 @@
 import React, {useContext, useState} from 'react';
 import styles from '../styles/DeleteUserForm.module.scss';
-import {ErrorContext, ModalContext} from "@/components/providers/Providers";
+import {ErrorContext, LoaderContext, ModalContext} from "@/components/providers/Providers";
 import {customRevalidateTag} from "@/lib/actions/helpers";
 import {deleteUser} from "@/lib/actions/auth/delete";
 
 const DeleteForm = () => {
     const {setError} = useContext(ErrorContext)
     const {setModalOpen, selectedIdUsers, setSelectedIdUsers} = useContext(ModalContext)
+    const {setLoading} = useContext(LoaderContext)
+
 
     const handleDelete = async () => {
+        setLoading(true)
+        if(!selectedIdUsers.length) {
+            setLoading(false)
+            setError('Please select at least one user')
+            return
+        }
         const resp = await deleteUser(selectedIdUsers)
         if (!resp.ok) {
             setError(resp.message)
+            setLoading(false)
             return
         }
 
         await customRevalidateTag('getUsers');
         setModalOpen(null)
+        setSelectedIdUsers([])
+        setLoading(false)
     }
+
 
     return (
         <div className={styles.form}>

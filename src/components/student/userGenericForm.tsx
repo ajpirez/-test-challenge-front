@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import {registerUser} from "@/lib/actions/auth/register";
 import {login} from "@/lib/actions/auth/login";
 import styles from "../styles/UserGenericForm.module.scss";
 import {User} from "@/lib/interfaces/userLogin.interface";
 import {customRevalidateTag} from "@/lib/actions/helpers";
-import {ErrorContext, ModalContext} from "@/components/providers/Providers";
+import {ErrorContext, LoaderContext, ModalContext} from "@/components/providers/Providers";
 import {editUser} from "@/lib/actions/auth/edit";
 
 type FormInputs = {
@@ -22,9 +22,12 @@ type FormInputs = {
 }
 
 const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register', externalData?: User | null }) => {
-    const {setError } = useContext(ErrorContext)
+    const {setError} = useContext(ErrorContext)
 
     const {setModalOpen} = useContext(ModalContext)
+
+    const {setLoading} = useContext(LoaderContext)
+
     const {register, handleSubmit, watch, reset, formState: {errors}} = useForm<FormInputs>({
         defaultValues: {
             id: externalData?._id || '',
@@ -54,6 +57,7 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
     const grade = watch('grade');
 
     const onSubmit: SubmitHandler<FormInputs> = async (data: FormInputs) => {
+        setLoading(true)
         const {id, firstName, lastName, email, password, age, grade} = data
 
         const action = {
@@ -65,6 +69,7 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
         const resp = await action[type as keyof typeof action]()
         if (!resp.ok) {
             setError(resp.message)
+            setLoading(false)
             return
         }
         reset();
@@ -74,6 +79,7 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
             setModalOpen(null)
             await customRevalidateTag('getUsers');
         }
+        setLoading(false)
     }
 
 

@@ -41,19 +41,40 @@ export const ErrorContext = createContext<ErrorContextProps>({
     },
 });
 
+interface LoaderContextProps {
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const LoaderContext = createContext<LoaderContextProps>({
+    loading: false,
+    setLoading: () => {
+    }
+});
+
 export const Providers = ({children}: Props) => {
     const [modalOpen, setModalOpen] = useState<string | null>(null);
     const [student, setStudent] = useState<User | null>(null);
     const [selectedIdUsers, setSelectedIdUsers] = useState<string[]>([]);
     const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState<boolean>(false)
 
 
     return (
-        <ModalContext.Provider value={{modalOpen, setModalOpen, student, setStudent, selectedIdUsers,setSelectedIdUsers}}>
+        <ModalContext.Provider value={{
+            modalOpen,
+            setModalOpen,
+            student,
+            setStudent,
+            selectedIdUsers,
+            setSelectedIdUsers
+        }}>
             <ErrorContext.Provider value={{error, setError}}>
-                <SessionProvider>
-                    {children}
-                </SessionProvider>
+                <LoaderContext.Provider value={{loading, setLoading}}>
+                    <SessionProvider>
+                        {children}
+                    </SessionProvider>
+                </LoaderContext.Provider>
             </ErrorContext.Provider>
         </ModalContext.Provider>
     );

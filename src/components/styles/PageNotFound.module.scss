@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 800px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.div {
+  text-align: center;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem
+}
+
+.h2 {
+  font-size: 8rem;
+  line-height: 1;
+}
+
+.p1 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.p2 {
+  font-weight: 300;
+
+  a {
+    &hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.div2 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+
+  a {
+    padding: 1.25rem;
+
+    @media (min-width: 640px) {
+      padding: 0px;
+    }
+  }
+
+
+}
+
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}

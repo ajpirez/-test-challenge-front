@@ -6,6 +6,7 @@ import Navbar from "@/components/ui/navbar";
 import UserModal from "@/components/ui/userModal";
 import Container from "@/components/ui/container";
 import Error from "@/components/ui/Error";
+import Loader from "@/components/ui/loader";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <Providers>
             <UserModal/>
             <Error/>
+            <Loader/>
             <Navbar/>
             <body className={inter.className}>
             <Container>

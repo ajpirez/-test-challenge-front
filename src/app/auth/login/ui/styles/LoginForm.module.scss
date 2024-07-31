@@ -22,13 +22,7 @@
   position: absolute;
   top: 0.5rem;
   right: 2rem;
-  color: white;
-}
-
-.divCredentials {
-  display: flex;
-  align-items: flex-end;
-  height: 2rem;
+  color: black;
 }
 
 .divider {
@@ -61,3 +55,13 @@
   color: $secondary-color;
 }
 
+.divCredentials {
+  display: flex;
+  margin: auto auto 0.5rem;
+}
+
+.p {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: red;
+}

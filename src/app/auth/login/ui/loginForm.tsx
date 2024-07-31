@@ -51,9 +51,9 @@ const LoginForm = () => {
                 aria-atomic="true"
             >
                 {state === "CredentialsSignin" && (
-                    <div className="flex m-auto mb-2">
+                    <div className={styles.divCredentials}>
                         {/*<IoInformationOutline className="h-5 w-5 text-red-500"/>*/}
-                        <p className="text-sm text-red-500">Invalid credentials</p>
+                        <p className={styles.p}>Invalid credentials</p>
                     </div>
                 )}
             </div>

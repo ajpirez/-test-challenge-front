@@ -124,6 +124,7 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
 
                 <label htmlFor="age">Edad</label>
                 <input
+                    min={6}
                     className={`${styles.input} ${errors.age ? styles.error : ''} `}
                     type="number"
                     {...register("age", {required: false, min: 6})}

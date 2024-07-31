@@ -13,6 +13,8 @@ interface ModalContextProps {
     setModalOpen: React.Dispatch<React.SetStateAction<string | null>>;
     student: User | null;
     setStudent: React.Dispatch<React.SetStateAction<User | null>>
+    selectedIdUsers: string[];
+    setSelectedIdUsers: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 export const ModalContext = createContext<ModalContextProps>({
@@ -22,15 +24,20 @@ export const ModalContext = createContext<ModalContextProps>({
     student: null,
     setStudent: () => {
     }
+    ,
+    selectedIdUsers: [],
+    setSelectedIdUsers: () => {
+    }
 });
 
 export const Providers = ({children}: Props) => {
     const [modalOpen, setModalOpen] = useState<string | null>(null);
     const [student, setStudent] = useState<User | null>(null);
+    const [selectedIdUsers, setSelectedIdUsers] = useState<string[]>([]);
 
 
     return (
-        <ModalContext.Provider value={{modalOpen, setModalOpen, student, setStudent}}>
+        <ModalContext.Provider value={{modalOpen, setModalOpen, student, setStudent, selectedIdUsers,setSelectedIdUsers}}>
             <SessionProvider>
                 {children}
             </SessionProvider>

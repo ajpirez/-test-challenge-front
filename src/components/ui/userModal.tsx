@@ -9,7 +9,7 @@ import DeleteForm from "@/components/student/deleteUserForm";
 type ModalType = 'add' | 'edit' | 'delete'
 
 function UserModal() {
-    const {modalOpen, setModalOpen, student} = useContext(ModalContext);
+    const {modalOpen, setModalOpen, student,selectedIdUsers} = useContext(ModalContext);
     console.log({student})
 
     const modalContent: Record<ModalType, { title: string; content: JSX.Element }> = {

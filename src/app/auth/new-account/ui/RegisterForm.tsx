@@ -140,7 +140,9 @@ const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register'
 
                 <button
                     className={styles.buttonIngresar}>
-                    Crear cuenta
+                    {
+                        type === 'edit' ? 'Editar cuenta' : 'Crear cuenta'
+                    }
                 </button>
 
 

@@ -3,9 +3,9 @@
 
 import {DeleteUser} from "@/lib/actions/auth";
 
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (ids: string[]) => {
     try {
-        const user = await DeleteUser({id})
+        const user = await DeleteUser({ids})
 
         return {
             ok: true,

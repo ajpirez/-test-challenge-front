@@ -1,0 +1,25 @@
+@import "../globalScss/mixins";
+
+.h1 {
+  @include rem-font-size(2.4);
+}
+
+.h2 {
+  @include rem-font-size(2);
+}
+
+.h3 {
+  @include rem-font-size(1.8);
+}
+
+.h4 {
+  @include rem-font-size(1.6);
+}
+
+.h5 {
+  @include rem-font-size(1.4);
+}
+
+.h6 {
+  @include rem-font-size(1.2);
+}

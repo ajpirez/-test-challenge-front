@@ -6,7 +6,7 @@ import styles from './styles/Page.module.scss'
 export default function Login() {
     return (
         <div className={styles.container}>
-            <h1 className={`${titleFont.className} ${styles.fontStyle}`}>Ingresar</h1>
+            <h1 className={`${titleFont.className} ${styles.fontStyle} ${styles.h1}`}>Ingresar</h1>
            <LoginForm/>
         </div>
     );

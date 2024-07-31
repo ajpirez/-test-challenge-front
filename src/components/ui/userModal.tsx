@@ -39,8 +39,8 @@ function UserModal() {
     }
 
     return (
-        <div className={styles.modal}>
-            <div className={styles.content}>
+        <div className={styles.modal} onClick={()=> setModalOpen(null)}>
+            <div className={styles.content} onClick={(e)=> e.stopPropagation()}>
                 <Image
                     onClick={() => setModalOpen(null)}
                     className={styles.close}

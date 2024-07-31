@@ -1,5 +1,7 @@
+@import "../../app/variables.module.scss";
+
 .form {
-  background-color: white;
+  background-color: $white-color;
   padding: 50px;
   width: 300px;
   text-align: center;
@@ -25,15 +27,15 @@
 }
 
 .confirm {
-  background-color: #d9534f;
-  color: white;
+  background-color: $confirm-color;
+  color:  $white-color;
 }
 
 .cancel {
-  background-color: #5bc0de;
-  color: white;
+  background-color: $cancel-color;
+  color: $white-color;
 }
 
 .error {
-  border-color: rgba(239, 68, 68, 1);
+  border-color: $danger-color;
 }

@@ -1,3 +1,5 @@
+@import "../../app/variables.module";
+
 .nav {
   background-color: #333;
   padding: 8px;
@@ -13,7 +15,7 @@
       margin-left: 10px;
 
       a, button {
-        color: #fff;
+        color: $white-color;
         text-decoration: none;
         padding: 10px;
         border: none;
@@ -21,7 +23,7 @@
         cursor: pointer;
 
         &:hover {
-          background-color: #555;
+          background-color: $gray-color;
         }
       }
     }

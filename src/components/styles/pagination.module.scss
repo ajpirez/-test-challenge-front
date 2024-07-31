@@ -1,3 +1,5 @@
+@import "../../app/variables.module";
+
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -7,15 +9,15 @@
     display: flex;
     gap: 8px;
 
-    button,a {
+    button, a {
       padding: 8px 16px;
       border-radius: 4px;
       text-decoration: none;
       color: #34495e;
 
       &.active {
-        background-color: #3498db;
-        color: white;
+        background-color: $cancel-color;
+        color: $white-color;
       }
     }
   }

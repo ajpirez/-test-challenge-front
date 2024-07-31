@@ -1,3 +1,4 @@
+@import "../../app/variables.module";
 .container{
   position: fixed;
   z-index: 500;
@@ -5,11 +6,11 @@
   right: 2.5rem;
   padding: 1.25rem;
   border-radius: 10px;
-  background: red;
+  background:$danger-color;
 }
 
 .element{
-  color: white;
+  color:$white-color;
   font-size: 16px;
   font-weight: bold;
 }

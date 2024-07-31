@@ -1,3 +1,5 @@
+@import "../../app/variables.module";
+
 .container {
   display: flex;
   position: relative;
@@ -12,11 +14,11 @@
 
 .button {
   padding: 5px;
-  border: 1px solid #1e1818;
+  border: 1px solid $black-color;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #1e1818;
-  color: white;
+  background-color: $black-color;
+  color: $white-color;
   font-size: 20px;
   font-weight: bold;
   margin-top: 20px;
@@ -27,7 +29,7 @@
 
 .main{
   padding: 20px;
-  border: 1px solid #1e1818;
+  border: 1px solid $black-color;
   border-radius: 5px;
 }
 

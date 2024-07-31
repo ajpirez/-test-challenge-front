@@ -11,9 +11,12 @@ export async function authenticate(
             redirect: false,
         });
         return 'Success';
-    } catch (error) {
+    } catch (error: any) {
         if ((error as any)?.type === 'CredentialsSignin') {
             return 'CredentialsSignin';
+        }
+        if (error?.cause?.err?.message) {
+            return error?.cause?.err?.message
         }
         // if (error instanceof AuthError) {
         //     switch (error.type) {

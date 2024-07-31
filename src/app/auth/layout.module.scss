@@ -1,3 +1,4 @@
+@import "../../app/globalScss/style";
 .container{
   height: 100%;
   display: flex;
@@ -8,10 +9,7 @@
 .div{
   width: 100%;
   padding: 0 1rem;
-}
-
-@media (min-width: 640px) {
-  .div {
+  @include mobileMin(){
     width: 350px;
   }
 }

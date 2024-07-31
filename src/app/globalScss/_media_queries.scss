@@ -1,0 +1,16 @@
+@mixin table() {
+  @media screen and (max-width: 900px) {
+    @content
+  }
+}
+
+@mixin mobile() {
+  @media screen and (max-width: 520px) {
+    @content
+  }
+}
+@mixin mobileMin() {
+  @media screen and (min-width: 520px) {
+    @content
+  }
+}

@@ -6,19 +6,21 @@ import HandleSignOut from "@/components/HandleSignOut";
 import {Pagination} from "@/components/ui/pagination/pagination";
 
 export default async function Page(props: { params: {}; searchParams: { page: string } }) {
+
     const users = await getStudents({
         page: +checkPositiveInteger(props.searchParams.page, 1, 1000000, '1'),
         limit: +checkPositiveInteger(props.searchParams.page, 10, 100, '10'),
     })
 
+
     return (
         <main>
             <HandleSignOut status={users?.status ?? 200}/>
-                    <Header/>
-                    <EmployeeTable users={users?.data?.elements ?? []}/>
-                    <Pagination totalPages={users?.data?.paginationResult?.totalElements ?? 0}
-                                totalElements={users?.data?.elements?.length ?? 0}
-                                lastPage={users?.data?.paginationResult?.lastPage ?? 1}/>
+            <Header/>
+            <EmployeeTable users={users?.data?.elements ?? []}/>
+            <Pagination totalPages={users?.data?.paginationResult?.totalElements ?? 0}
+                        totalElements={users?.data?.elements?.length ?? 0}
+                        lastPage={users?.data?.paginationResult?.lastPage ?? 1}/>
         </main>
     );
 }

@@ -77,8 +77,8 @@ const EmployeeTable = ({users}: { users: Element[] }) => {
                                 )
                             }
                         </td>
-                        <td><Link href={`/student/${user._id}`}>{user.firstName}</Link></td>
-                        <td>{user.lastName}</td>
+                        <td className={styles.truncate}><Link href={`/student/${user._id}`}>{user.firstName}</Link></td>
+                        <td className={styles.truncate}>{user.lastName}</td>
                         <td>{user.email}</td>
                         <td>{user.age}</td>
                         <td>{user.grade}</td>

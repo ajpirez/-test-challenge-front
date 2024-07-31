@@ -1,25 +1,16 @@
-@import "../../app/variables.module";
+@import "../../app/globalScss/style";
 
 .tableContainer {
-  background: bisque;
   height: 60vh;
   margin: 16px;
-  //background-color:$white-color;
   border-radius: 8px;
   box-shadow: 0 0 10px $black-lower-color;
-}
-
-@media (max-width: 640px) {
-  .tableContainer {
+  @include mobile(){
     overflow-x: scroll;
-    width: 100%;
+    width: auto;
   }
-  .employeeTable{
-    width: 100%;
-    th,td{
-      padding: 1rem;
-      width: 100%;
-    }
+  @include table(){
+      height: auto;
   }
 }
 
@@ -31,12 +22,17 @@
 
 
   th, td {
+    padding: 0.5rem;
     text-align: center;
     border-bottom: 1px solid $gray-color;
+    @include mobile(){
+      padding: 1rem;
+      width: 100%;
+    }
   }
 
   th {
-    background-color: $gray-color-medium;
+   color: $primary-color;
   }
 
   tbody tr:hover {
@@ -84,4 +80,10 @@
       }
     }
   }
+}
+.truncate {
+  max-width: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

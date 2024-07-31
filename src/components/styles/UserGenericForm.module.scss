@@ -1,4 +1,4 @@
-@import "../../app/variables.module";
+@import "../../app/globalScss/style";
 
 .form {
   display: flex;
@@ -7,10 +7,9 @@
 
 .input {
   padding: 0.5rem 1.25rem;
-  background-color: $primary-color;
   border-radius: 0.25rem;
   margin-bottom: 1.25rem;
-  color: $white-color;
+  background-color: $gray-color-hover;
   width: 100%;
 
   &:focus {

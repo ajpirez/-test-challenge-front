@@ -77,7 +77,6 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
         }
 
         const resp = await action[type as keyof typeof action]()
-        console.log({resp}, 'estpppppppppp')
         if (!resp.ok) {
             setError(resp.message)
             setLoading(false)

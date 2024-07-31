@@ -1,8 +1,8 @@
 'use client'
-import styles from '../styles/Header.module.scss';
 import {useContext} from "react";
 import {ModalContext} from "@/components/providers/Providers";
 import Image from "next/image";
+import styles from '../styles/header.module.scss'
 
 const Header = () => {
     const {setModalOpen} = useContext(ModalContext)

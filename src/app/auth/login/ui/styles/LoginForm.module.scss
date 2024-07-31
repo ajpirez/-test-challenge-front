@@ -1,4 +1,4 @@
-@import "../../../../variables.module";
+@import "../../../../globalScss/style";
 
 .form {
   width: 100%;
@@ -7,32 +7,20 @@
   flex-direction: column;
   padding: 1rem;
   height: 100%;
-  margin-bottom: 10px;
-}
-@media (min-width: 640px) {
-  .form{
+  @include mobile(){
     margin-top: 20px;
     padding-top: 0.5rem;
-    min-height: 100%;
+    height: auto;
   }
 }
-
-@media (max-width: 640px) {
-  .form {
-    min-height: 100%;
-    margin-top: 20px;
-    padding: 0.5rem 1rem 1rem;
-  }
-}
-
 
 
 .input {
   padding: 0.5rem 1.25rem;
-  background-color: $primary-color;
+  background-color: $gray-color-hover;
   border-radius: 0.25rem;
   margin-bottom: 1.25rem;
-  color: $white-color;
+  color: $black-color;
   width: 100%;
 }
 

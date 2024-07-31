@@ -2,13 +2,16 @@
 
 import Link from "next/link";
 import {useFormState, useFormStatus} from 'react-dom'
-import {useEffect, useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import {useRouter} from "next/navigation";
 import {authenticate} from "@/lib/actions/auth/login";
 import styles from './styles/LoginForm.module.scss'
+import {ErrorContext} from "@/components/providers/Providers";
 
 const LoginForm = () => {
-    const router = useRouter()
+    const {
+        setError
+    } = useContext(ErrorContext)
     const [showPassword, setShowPassword] = useState(false)
     const [state, dispatch] = useFormState(authenticate, undefined)
 
@@ -16,8 +19,11 @@ const LoginForm = () => {
     useEffect(() => {
         if (state === "Success") {
             window.location.replace('/')
+        }else {
+            setError(state)
         }
-    }, [router, state]);
+    }, [setError, state]);
+
 
     return (
         <form action={dispatch}

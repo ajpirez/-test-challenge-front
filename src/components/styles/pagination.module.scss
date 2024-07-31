@@ -1,9 +1,25 @@
-@import "../../app/variables.module";
+@import "../../app/globalScss/style";
 
 .pagination {
   display: flex;
   justify-content: space-between;
   padding: 16px;
+  @include mobile(){
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  @include table(){
+    margin-top: 5rem;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .num{
+    font-weight: bold;
+    color: $tertiary-color;
+  }
 
   .pages {
     display: flex;

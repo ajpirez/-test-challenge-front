@@ -2,6 +2,7 @@ import Credentials from "next-auth/providers/credentials";
 import {z} from 'zod'
 import NextAuth, {NextAuthConfig} from "next-auth";
 import {loginUser} from "@/lib/actions/auth";
+import {redirect} from "next/navigation";
 
 const authenticatedRoutes = [
     '/',
@@ -30,7 +31,7 @@ export const authConfig: NextAuthConfig = {
         session: async ({session, token}) => {
             session.user = token.data as any
             return session
-        }
+        },
     },
     providers: [
         Credentials({
@@ -44,6 +45,14 @@ export const authConfig: NextAuthConfig = {
                 const data = await loginUser({email, password})
 
                 const {user, token} = data
+
+                if (!token) {
+                    const e = new Error()
+                    e.message = data.message
+                    throw e
+                }
+
+
                 return {...user, access_token: token}
             },
         }),

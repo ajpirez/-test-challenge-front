@@ -39,7 +39,7 @@ export const Pagination = ({totalPages, totalElements, lastPage}: { totalPages: 
 
     return (
         <div className={styles.pagination}>
-            <span>Showing {totalElements} out of {totalPages} entries</span>
+            <span>Showing <span className={styles.num}>{totalElements}</span> out of <span className={styles.num}>{totalPages}</span> entries</span>
             <div className={styles.pages}>
                 <Link href={createPageUrl(currentPage - 1)}>Previous</Link>
                 {allPages.map((page, index) => (

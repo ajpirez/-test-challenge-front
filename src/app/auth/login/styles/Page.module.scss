@@ -1,18 +1,16 @@
+@import "../../../globalScss/style";
+
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding-top: 8rem
+  justify-content: center;
+  align-items: center;
+
 }
 
 .fontStyle{
   font-size: 2.25rem;
   line-height: 2.5rem;
   margin-bottom: 1.25rem
-}
-
-@media (min-width: 640px) {
-  .container{
-    padding-top: 13rem
-  }
 }

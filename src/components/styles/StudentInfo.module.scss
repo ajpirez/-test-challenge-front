@@ -1,4 +1,4 @@
-@import "../../app/variables.module";
+@import "../../app/globalScss/style";
 
 .container {
   display: flex;
@@ -8,8 +8,7 @@
   justify-content: center;
   height: 100vh;
   margin: 0 auto;
-  padding: 20px;
-
+  padding: 5rem;
 }
 
 .button {
@@ -28,12 +27,14 @@
 }
 
 .main{
+  overflow-x: auto;
   padding: 20px;
   border: 1px solid $black-color;
   border-radius: 5px;
 }
 
 .name {
+  max-width: 5rem;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;

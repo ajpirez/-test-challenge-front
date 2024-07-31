@@ -15,12 +15,11 @@ export const loginUser = async ({email, password}: { email: string; password: st
         });
 
         const res = await fetch(`${BASE_URL}/v1/api/auth/signin`, requestOptions);
-        if (!res.ok) {
-            const resp = await res.json();
-            throw resp.message;
-        }
         const data = await res.json();
-        return data as userLogin;
+        if (data.status) {
+            return data
+        }
+        return data as User
     } catch (error) {
         throw new Error('error');
     }

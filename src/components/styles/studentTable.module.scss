@@ -1,12 +1,26 @@
 @import "../../app/variables.module";
 
 .tableContainer {
+  background: bisque;
   height: 60vh;
-
   margin: 16px;
-  background-color:$white-color;
+  //background-color:$white-color;
   border-radius: 8px;
   box-shadow: 0 0 10px $black-lower-color;
+}
+
+@media (max-width: 640px) {
+  .tableContainer {
+    overflow-x: scroll;
+    width: 100%;
+  }
+  .employeeTable{
+    width: 100%;
+    th,td{
+      padding: 1rem;
+      width: 100%;
+    }
+  }
 }
 
 .employeeTable {

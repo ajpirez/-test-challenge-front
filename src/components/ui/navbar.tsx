@@ -10,20 +10,21 @@ const Navbar = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
+        console.log('entro')
         setIsAuthenticated(!!session);
     }, [isAuthenticated, session]);
 
-    if (!m) {
-        return null;
-    }
 
-    if (!isAuthenticated) return null;
+
 
     const logoutUser = async () => {
         await signOut();
         setIsAuthenticated(false);
     };
-
+    if (!isAuthenticated) return null;
+    if (!m) {
+        return null;
+    }
     return (
         <nav className={styles.nav}>
             <ul>

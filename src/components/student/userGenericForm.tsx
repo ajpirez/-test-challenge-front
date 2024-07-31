@@ -10,6 +10,8 @@ import {User} from "@/lib/interfaces/userLogin.interface";
 import {customRevalidateTag} from "@/lib/actions/helpers";
 import {ErrorContext, LoaderContext, ModalContext} from "@/components/providers/Providers";
 import {editUser} from "@/lib/actions/auth/edit";
+import {useMounted} from "@/components/hooks/useMounted";
+import {useRouter} from "next/navigation";
 
 type FormInputs = {
     id?: string
@@ -22,11 +24,16 @@ type FormInputs = {
 }
 
 const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register', externalData?: User | null }) => {
+    const m = useMounted();
+    const router = useRouter()
+
     const {setError} = useContext(ErrorContext)
 
     const {setModalOpen} = useContext(ModalContext)
 
     const {setLoading} = useContext(LoaderContext)
+
+
 
     const {register, handleSubmit, watch, reset, formState: {errors}} = useForm<FormInputs>({
         defaultValues: {
@@ -39,6 +46,7 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
             grade: externalData?.grade || 1,
         }
     })
+
 
     useEffect(() => {
         if (externalData) {
@@ -54,6 +62,8 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
         }
     }, [externalData, reset]);
 
+
+
     const grade = watch('grade');
 
     const onSubmit: SubmitHandler<FormInputs> = async (data: FormInputs) => {
@@ -67,6 +77,7 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
         }
 
         const resp = await action[type as keyof typeof action]()
+        console.log({resp}, 'estpppppppppp')
         if (!resp.ok) {
             setError(resp.message)
             setLoading(false)
@@ -74,7 +85,9 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
         }
         reset();
         if (type === 'register') {
+            console.log(type)
             await login(email.toLowerCase(), password)
+            window.location.replace('/')
         } else {
             setModalOpen(null)
             await customRevalidateTag('getUsers');
@@ -82,6 +95,9 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
         setLoading(false)
     }
 
+    if (!m) {
+        return null;
+    }
 
     return (
         <>

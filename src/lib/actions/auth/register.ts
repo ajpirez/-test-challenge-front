@@ -7,6 +7,12 @@ export const registerUser = async (firstName: string, lastName: string, email: s
     try {
         const user = await RegisterUser({firstName, lastName, email, password, age, grade})
 
+        if (!user || user.status) {
+            return {
+                ok: false,
+                message: user.message
+            }
+        }
         return {
             ok: true,
             user,

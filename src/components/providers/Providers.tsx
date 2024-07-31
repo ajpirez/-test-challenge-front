@@ -30,17 +30,31 @@ export const ModalContext = createContext<ModalContextProps>({
     }
 });
 
+interface ErrorContextProps {
+    error: string | null;
+    setError: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+export const ErrorContext = createContext<ErrorContextProps>({
+    error: '',
+    setError: () => {
+    },
+});
+
 export const Providers = ({children}: Props) => {
     const [modalOpen, setModalOpen] = useState<string | null>(null);
     const [student, setStudent] = useState<User | null>(null);
     const [selectedIdUsers, setSelectedIdUsers] = useState<string[]>([]);
+    const [error, setError] = useState<string | null>(null)
 
 
     return (
         <ModalContext.Provider value={{modalOpen, setModalOpen, student, setStudent, selectedIdUsers,setSelectedIdUsers}}>
-            <SessionProvider>
-                {children}
-            </SessionProvider>
+            <ErrorContext.Provider value={{error, setError}}>
+                <SessionProvider>
+                    {children}
+                </SessionProvider>
+            </ErrorContext.Provider>
         </ModalContext.Provider>
     );
 };

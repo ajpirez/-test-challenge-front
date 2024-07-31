@@ -4,6 +4,8 @@ import "./globals.scss";
 import {Providers} from "@/components/providers/Providers";
 import Navbar from "@/components/ui/navbar";
 import UserModal from "@/components/ui/userModal";
+import Container from "@/components/ui/container";
+import Error from "@/components/ui/Error";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -20,9 +22,14 @@ export default function RootLayout({
     return (
         <html lang="en">
         <Providers>
-            <UserModal />
+            <UserModal/>
+            <Error/>
             <Navbar/>
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+            <Container>
+                {children}
+            </Container>
+            </body>
         </Providers>
         </html>
     );

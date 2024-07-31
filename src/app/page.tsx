@@ -14,14 +14,11 @@ export default async function Page(props: { params: {}; searchParams: { page: st
     return (
         <main>
             <HandleSignOut status={users?.status ?? 200}/>
-            <div>
-                <Header/>
-                <EmployeeTable users={users?.data?.elements ?? []}/>
-                <Pagination totalPages={users?.data?.paginationResult?.totalElements ?? 0}
-                            totalElements={users?.data?.elements?.length ?? 0}
-                            lastPage={users?.data?.paginationResult?.lastPage ?? 1}/>
-
-            </div>
+                    <Header/>
+                    <EmployeeTable users={users?.data?.elements ?? []}/>
+                    <Pagination totalPages={users?.data?.paginationResult?.totalElements ?? 0}
+                                totalElements={users?.data?.elements?.length ?? 0}
+                                lastPage={users?.data?.paginationResult?.lastPage ?? 1}/>
         </main>
     );
 }

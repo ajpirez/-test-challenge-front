@@ -7,6 +7,13 @@ export const deleteUser = async (ids: string[]) => {
     try {
         const user = await DeleteUser({ids})
 
+        if (!user || user.status) {
+            return {
+                ok: false,
+                message: user.message
+            }
+        }
+
         return {
             ok: true,
             user,

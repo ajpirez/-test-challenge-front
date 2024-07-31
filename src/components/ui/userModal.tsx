@@ -3,7 +3,7 @@ import {useContext} from 'react';
 import styles from '../styles/Modal.module.scss';
 import Image from 'next/image';
 import {ModalContext} from "@/components/providers/Providers";
-import RegisterForm from "@/app/auth/new-account/ui/RegisterForm";
+import UserGenericForm from "@/components/student/userGenericForm";
 import DeleteForm from "@/components/student/deleteUserForm";
 
 type ModalType = 'add' | 'edit' | 'delete'
@@ -16,14 +16,14 @@ function UserModal() {
         add: {
             title: 'Create an account',
             content: (
-                <RegisterForm type={'add'}/>
+                <UserGenericForm type={'add'}/>
             )
         },
         edit: {
             title: 'Edit an account',
             content: (
-                <RegisterForm type={'edit'}
-                              externalData={student}/>
+                <UserGenericForm type={'edit'}
+                                 externalData={student}/>
             )
         },
         delete: {
@@ -45,7 +45,7 @@ function UserModal() {
                     onClick={() => setModalOpen(null)}
                     className={styles.close}
                     alt="Close modal"
-                    src={'/close.png'}
+                    src={'/Close.png'}
                     width={32}
                     height={32}
                 />

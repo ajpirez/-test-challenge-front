@@ -6,6 +6,7 @@ import {ModalContext} from "@/components/providers/Providers";
 import Image from "next/image";
 import {User} from "@/lib/interfaces/userLogin.interface";
 import {useSession} from "next-auth/react";
+import Link from "next/link";
 
 const EmployeeTable = ({users}: { users: Element[] }) => {
     const {data: session, status} = useSession();
@@ -76,7 +77,7 @@ const EmployeeTable = ({users}: { users: Element[] }) => {
                                 )
                             }
                         </td>
-                        <td>{user.firstName}</td>
+                        <td><Link href={`/student/${user._id}`}>{user.firstName}</Link></td>
                         <td>{user.lastName}</td>
                         <td>{user.email}</td>
                         <td>{user.age}</td>
@@ -86,14 +87,14 @@ const EmployeeTable = ({users}: { users: Element[] }) => {
                             <button onClick={() => handleEdit(user as User)}
                                     className={styles.edit}><Image width={10}
                                                                    height={10}
-                                                                   src="/placeholder-icons/edit-icon.png"
+                                                                   src="/lapiz.png"
                                                                    alt="Edit"/></button>
                             {
                                 session?.user?._id !== user._id && (
                                     <button onClick={() => handleDelete(user as User)}
                                             className={styles.delete}><Image width={10}
                                                                              height={10}
-                                                                             src="/placeholder-icons/delete-icon.png"
+                                                                             src="/borrar.png"
                                                                              alt="Delete"/>
 
                                     </button>

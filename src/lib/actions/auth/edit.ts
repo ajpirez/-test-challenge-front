@@ -7,6 +7,13 @@ export const editUser = async (id: string, firstName: string, lastName: string, 
     try {
         const user = await EditUser({id,firstName, lastName, age, grade})
 
+        if (!user || user.status) {
+            return {
+                ok: false,
+                message: user.message
+            }
+        }
+
         return {
             ok: true,
             user,

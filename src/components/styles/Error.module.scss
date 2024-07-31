@@ -1,0 +1,15 @@
+.container{
+  position: fixed;
+  z-index: 500;
+  top: 2.5rem;
+  right: 2.5rem;
+  padding: 1.25rem;
+  border-radius: 10px;
+  background: red;
+}
+
+.element{
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}

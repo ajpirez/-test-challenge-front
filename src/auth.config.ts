@@ -7,11 +7,6 @@ const authenticatedRoutes = [
     '/',
 ]
 
-const adminRoutes = [
-    '/admin/orders',
-    '/admin/users',
-    '/admin/products',
-]
 
 export const authConfig: NextAuthConfig = {
     pages: {
@@ -21,14 +16,8 @@ export const authConfig: NextAuthConfig = {
     callbacks: {
         authorized({auth, request: {nextUrl}}) {
             const isLoggedIn = !!auth?.user;
-            const isAdmin = auth?.user?.rols?.includes('admin');
             const isAnAuthenticatedRoute = authenticatedRoutes.includes(nextUrl.pathname)
-            const isAnAdminRoute = adminRoutes.includes(nextUrl.pathname)
             if (!isLoggedIn && isAnAuthenticatedRoute) {
-                return Response.redirect(new URL('/auth/login', nextUrl));
-            }
-
-            if (!isAdmin && isAnAdminRoute) {
                 return Response.redirect(new URL('/auth/login', nextUrl));
             }
 
@@ -53,6 +42,7 @@ export const authConfig: NextAuthConfig = {
 
                 const {email, password} = parsedCredentials.data
                 const data = await loginUser({email, password})
+
                 const {user, token} = data
                 return {...user, access_token: token}
             },

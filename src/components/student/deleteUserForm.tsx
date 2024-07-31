@@ -1,17 +1,17 @@
 import React, {useContext, useState} from 'react';
 import styles from '../styles/DeleteUserForm.module.scss';
-import {ModalContext} from "@/components/providers/Providers";
+import {ErrorContext, ModalContext} from "@/components/providers/Providers";
 import {customRevalidateTag} from "@/lib/actions/helpers";
 import {deleteUser} from "@/lib/actions/auth/delete";
 
 const DeleteForm = () => {
+    const {setError} = useContext(ErrorContext)
     const {setModalOpen, selectedIdUsers, setSelectedIdUsers} = useContext(ModalContext)
-    const [errorMessage, setErrorMessage] = useState("")
 
     const handleDelete = async () => {
         const resp = await deleteUser(selectedIdUsers)
         if (!resp.ok) {
-            setErrorMessage(resp.message)
+            setError(resp.message)
             return
         }
 
@@ -30,9 +30,6 @@ const DeleteForm = () => {
                         className={`${styles.cancel} ${styles.button}`}>Cancel
                 </button>
             </div>
-            {
-                <span className={styles.error}>{errorMessage}</span>
-            }
         </div>
     );
 };

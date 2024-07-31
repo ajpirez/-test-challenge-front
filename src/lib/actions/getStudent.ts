@@ -2,20 +2,20 @@
 
 import {CustomHeaders} from "@/lib/actions/helpers";
 import {BASE_URL} from "@/lib/actions/auth";
-import {UserResponse} from "@/lib/interfaces/userResponse";
+import {User} from "@/lib/interfaces/userLogin.interface";
 
 
-export async function getStudents({page = 1, limit = 10}: { page?: number; limit?: number }) {
+export async function getStudent({id}: { id:string }) {
     try {
         const requestOptions = await CustomHeaders({
             method: 'GET',
         });
 
 
-        const res = await fetch(`${BASE_URL}/v1/api/user?limit=${limit}&page=${page}`, {
+        const res = await fetch(`${BASE_URL}/v1/api/user/${id}`, {
             ...requestOptions,
             cache: 'no-store',
-            next: { tags: ['getUsers'] },
+            next: { tags: ['getUser'] },
         });
 
         const data = await res.json();
@@ -27,7 +27,7 @@ export async function getStudents({page = 1, limit = 10}: { page?: number; limit
         if (data.status) {
             return {success: false, message: data.message};
         }
-        return {data: data as UserResponse, success: true};
+        return {data: data as User, success: true};
     } catch (e: any) {
         console.log(e);
         return {success: false, message: e.message};

@@ -14,6 +14,7 @@ export interface User {
     rols:      Rol[];
 }
 
+
 export interface Rol {
     _id:    string;
     type:   string;

@@ -5,10 +5,10 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {useContext, useEffect, useState} from "react";
 import {registerUser} from "@/lib/actions/auth/register";
 import {login} from "@/lib/actions/auth/login";
-import styles from "../ui/styles/RegisterForm.module.scss";
+import styles from "../styles/UserGenericForm.module.scss";
 import {User} from "@/lib/interfaces/userLogin.interface";
 import {customRevalidateTag} from "@/lib/actions/helpers";
-import {ModalContext} from "@/components/providers/Providers";
+import {ErrorContext, ModalContext} from "@/components/providers/Providers";
 import {editUser} from "@/lib/actions/auth/edit";
 
 type FormInputs = {
@@ -21,10 +21,10 @@ type FormInputs = {
     grade: number
 }
 
-const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register', externalData?: User | null }) => {
+const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register', externalData?: User | null }) => {
+    const {setError } = useContext(ErrorContext)
 
     const {setModalOpen} = useContext(ModalContext)
-    const [errorMessage, setErrorMessage] = useState("")
     const {register, handleSubmit, watch, reset, formState: {errors}} = useForm<FormInputs>({
         defaultValues: {
             id: externalData?._id || '',
@@ -54,7 +54,6 @@ const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register'
     const grade = watch('grade');
 
     const onSubmit: SubmitHandler<FormInputs> = async (data: FormInputs) => {
-        setErrorMessage('')
         const {id, firstName, lastName, email, password, age, grade} = data
 
         const action = {
@@ -65,7 +64,7 @@ const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register'
 
         const resp = await action[type as keyof typeof action]()
         if (!resp.ok) {
-            setErrorMessage(resp.message)
+            setError(resp.message)
             return
         }
         reset();
@@ -134,9 +133,6 @@ const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register'
                     {...register("grade", {required: false, min: 1, max: 5})}
                 />
                 <span className={styles.range}>{grade}</span>
-                {
-                    <span className={styles.error}>{errorMessage}</span>
-                }
 
                 <button
                     className={styles.buttonIngresar}>
@@ -170,4 +166,4 @@ const RegisterForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register'
     );
 };
 
-export default RegisterForm;
+export default UserGenericForm;

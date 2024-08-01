@@ -1,7 +1,8 @@
 @import "../../app/globalScss/style";
 
 .tableContainer {
-  height: 60vh;
+  position: relative;
+  height: 70vh;
   margin: 16px;
   border-radius: 8px;
   box-shadow: 0 0 10px $black-lower-color;

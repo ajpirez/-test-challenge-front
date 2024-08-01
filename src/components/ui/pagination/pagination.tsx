@@ -3,18 +3,31 @@ import Link from "next/link";
 import {redirect, usePathname, useSearchParams} from "next/navigation";
 import styles from '../../styles/pagination.module.scss';
 import {generatePaginationNumbers} from "@/lib/utils";
+import {useContext, useEffect} from "react";
+import {PaginationContext} from "@/components/providers/Providers";
 
-interface Props {
-    totalPages: number;
-}
 
-export const Pagination = ({totalPages, totalElements, lastPage}: { totalPages: number, totalElements: number, lastPage: number }) => {
+export const Pagination = ({totalPages, totalElements, lastPage}: {
+    totalPages: number,
+    totalElements: number,
+    lastPage: number
+}) => {
+    const {setTotalPages, setTotalElements} = useContext(PaginationContext)
+
     const pathName = usePathname();
     const searchParams = useSearchParams();
+
+
+    useEffect(() => {
+        setTotalPages(totalPages)
+        setTotalElements(totalElements)
+    }, [setTotalElements, setTotalPages, totalElements, totalPages]);
+
 
     const pageString = searchParams.get('page') ?? '1';
 
     let currentPage = isNaN(+pageString) ? 1 : +pageString;
+
 
     if (currentPage < 1 || isNaN(+pageString)) {
         redirect(pathName);
@@ -37,8 +50,6 @@ export const Pagination = ({totalPages, totalElements, lastPage}: { totalPages: 
         return `${pathName}?${params.toString()}`;
     };
 
-    console.log(totalElements)
-    console.log(currentPage)
 
     return (
         <div className={styles.pagination}>

@@ -7,12 +7,14 @@ import {registerUser} from "@/lib/actions/auth/register";
 import {login} from "@/lib/actions/auth/login";
 import styles from "../styles/UserGenericForm.module.scss";
 import {User} from "@/lib/interfaces/userLogin.interface";
-import {customRevalidateTag} from "@/lib/actions/helpers";
-import {ErrorContext, LoaderContext, ModalContext} from "@/components/providers/Providers";
+import {customRevalidateTag, RevalidatePath} from "@/lib/actions/helpers";
+import {ErrorContext, LoaderContext, ModalContext, PaginationContext} from "@/components/providers/Providers";
 import {editUser} from "@/lib/actions/auth/edit";
 import {useMounted} from "@/components/hooks/useMounted";
 import Image from "next/image";
 import {log} from "node:util";
+import {revalidatePath} from "next/cache";
+import {useSearchParams} from "next/navigation";
 
 type FormInputs = {
     id?: string
@@ -32,10 +34,13 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
     const {setModalOpen} = useContext(ModalContext)
 
     const {setLoading} = useContext(LoaderContext)
+    const {setTotalElements}= useContext(PaginationContext)
 
     const [showPassword, setShowPassword] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
+    const searchParams = useSearchParams()
 
+    const pageString = searchParams.get('page') ?? 1
 
 
     const {register, handleSubmit, watch, reset, formState: {errors}} = useForm<FormInputs>({
@@ -93,6 +98,8 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
             window.location.replace('/')
         } else {
             setModalOpen(null)
+            setTotalElements(item => item + 1)
+            await RevalidatePath(`/page=${pageString}`)
             await customRevalidateTag('getUsers');
         }
         setLoading(false)

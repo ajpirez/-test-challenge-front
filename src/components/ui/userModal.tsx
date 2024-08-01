@@ -2,16 +2,14 @@
 import {useContext} from 'react';
 import styles from '../styles/Modal.module.scss';
 import Image from 'next/image';
-import {ModalContext} from "@/components/providers/Providers";
+import {ModalContext, PaginationContext} from "@/components/providers/Providers";
 import UserGenericForm from "@/components/student/userGenericForm";
 import DeleteForm from "@/components/student/deleteUserForm";
 
 type ModalType = 'add' | 'edit' | 'delete'
 
 function UserModal() {
-    const {modalOpen, setModalOpen, student,selectedIdUsers} = useContext(ModalContext);
-    console.log({student})
-
+    const {modalOpen, setModalOpen, student, selectedIdUsers} = useContext(ModalContext);
     const modalContent: Record<ModalType, { title: string; content: JSX.Element }> = {
         add: {
             title: 'Create an account',
@@ -39,8 +37,10 @@ function UserModal() {
     }
 
     return (
-        <div className={styles.modal} onClick={()=> setModalOpen(null)}>
-            <div className={styles.content} onClick={(e)=> e.stopPropagation()}>
+        <div className={styles.modal}
+             onClick={() => setModalOpen(null)}>
+            <div className={styles.content}
+                 onClick={(e) => e.stopPropagation()}>
                 <Image
                     onClick={() => setModalOpen(null)}
                     className={styles.close}

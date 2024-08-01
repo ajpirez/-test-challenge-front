@@ -2,7 +2,7 @@
 import styles from '../styles/studentTable.module.scss';
 import {Element} from "@/lib/interfaces/userResponse";
 import {useContext} from "react";
-import {ModalContext} from "@/components/providers/Providers";
+import {ModalContext, PaginationContext} from "@/components/providers/Providers";
 import Image from "next/image";
 import {User} from "@/lib/interfaces/userLogin.interface";
 import {useSession} from "next-auth/react";
@@ -22,10 +22,10 @@ const EmployeeTable = ({users, page}: { users: Element[], page:string }) => {
         setModalOpen('delete')
     }
     const handleSelectAll = () => {
-        if (selectedIdUsers.length === users.length - 1) {
+        const filteredUsers = users.filter(user => user._id !== session?.user._id);
+        if (selectedIdUsers.length === filteredUsers.length  ) {
             setSelectedIdUsers([]);
         } else {
-            const filteredUsers = users.filter(user => user._id !== session?.user._id);
             setSelectedIdUsers(filteredUsers.map(user => user._id));
         }
     };
@@ -50,7 +50,7 @@ const EmployeeTable = ({users, page}: { users: Element[], page:string }) => {
                     <th>
                         <input
                             type="checkbox"
-                            checked={selectedIdUsers.length === users.length - 1}
+                            checked={selectedIdUsers.length === users.filter(user => user._id !== session?.user._id).length}
                             onChange={handleSelectAll}
                         />
                     </th>

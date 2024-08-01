@@ -17,8 +17,6 @@ const DeleteForm = () => {
 
 
     const pageString = searchParams.get('page') ?? 1
-    console.log({totalElements})
-    console.log({pageString})
     const handleDelete = async () => {
         setLoading(true)
         if (!selectedIdUsers.length) {

@@ -10,7 +10,6 @@ const Navbar = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        console.log('entro')
         setIsAuthenticated(!!session);
     }, [isAuthenticated, session]);
 

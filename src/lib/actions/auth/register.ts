@@ -13,6 +13,12 @@ export const registerUser = async (firstName: string, lastName: string, email: s
                 message: user.message
             }
         }
+        if(user?.output?.payload){
+            return {
+                ok: false,
+                message: user?.output?.payload?.message
+            }
+        }
         return {
             ok: true,
             user,

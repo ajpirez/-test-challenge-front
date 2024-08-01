@@ -11,8 +11,8 @@ import {customRevalidateTag} from "@/lib/actions/helpers";
 import {ErrorContext, LoaderContext, ModalContext} from "@/components/providers/Providers";
 import {editUser} from "@/lib/actions/auth/edit";
 import {useMounted} from "@/components/hooks/useMounted";
-import {useRouter} from "next/navigation";
 import Image from "next/image";
+import {log} from "node:util";
 
 type FormInputs = {
     id?: string
@@ -26,7 +26,6 @@ type FormInputs = {
 
 const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'register', externalData?: User | null }) => {
     const m = useMounted();
-    const router = useRouter()
 
     const {setError} = useContext(ErrorContext)
 
@@ -35,6 +34,7 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
     const {setLoading} = useContext(LoaderContext)
 
     const [showPassword, setShowPassword] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
 
 
 
@@ -73,6 +73,7 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
         setLoading(true)
         const {id, firstName, lastName, email, password, age, grade} = data
 
+
         const action = {
             add: () => registerUser(firstName, lastName, email, password, age, grade),
             edit: () => editUser(id!, firstName, lastName, age, grade),
@@ -81,8 +82,9 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
 
         const resp = await action[type as keyof typeof action]()
         if (!resp.ok) {
-            setError(resp.message)
             setLoading(false)
+            setErrorMessage(resp.message)
+            setError(resp.message)
             return
         }
         reset();
@@ -105,30 +107,66 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
             <form onSubmit={handleSubmit(onSubmit)}
                   className={styles.form}>
 
-                <label htmlFor="name">Nombre Completo</label>
+                <label htmlFor="firstName">Nombre Completo</label>
                 <input
+                    id="firstName"
                     className={`${styles.input} ${errors.firstName ? styles.error : ''} `}
                     type="text"
                     autoFocus
-                    {...register("firstName", {required: true, minLength: 3})}
+                    {...register("firstName", {
+                        required: "El nombre es obligatorio",
+                        minLength: {
+                            value: 3,
+                            message: "El nombre debe tener al menos 3 caracteres"
+                        },
+                        pattern: {
+                            value: /^[a-zA-Z\s]+$/,
+                            message: "El nombre solo puede contener letras y espacios"
+                        }
+                    })}
                 />
+                {
+                    errors.firstName && (
+                        <p className={styles.color}>{ errors.firstName.message}</p>
+                    )
+                }
                 <label htmlFor="lastName">Apellidos</label>
                 <input
-                    className={`${styles.input} ${errors.lastName ? styles.error : ''} `}
+                    id="lastName"
+                    className={`${styles.input} ${errors.lastName ? styles.error : ''}`}
                     type="text"
                     autoFocus
-                    {...register("lastName", {required: false, minLength: 3})}
+                    {...register("lastName", {
+                        required: false,
+                        minLength: {
+                            value: 3,
+                            message: "El apellido debe tener al menos 3 caracteres"
+                        }
+                    })}
                 />
+                {errors.lastName && (
+                    <p className={styles.color}>{errors.lastName.message}</p>
+                )}
 
                 {
                     type !== 'edit' && (
                         <>
                             <label htmlFor="email">Correo electrónico</label>
                             <input
-                                className={`${styles.input} ${errors.email ? styles.error : ''} `}
+                                id="email"
+                                className={`${styles.input} ${errors.email ? styles.error : ''}`}
                                 type="email"
-                                {...register("email", {required: true, pattern: /^\S+@\S+$/i})}
+                                {...register("email", {
+                                    required: "El correo electrónico es obligatorio",
+                                    pattern: {
+                                        value: /^\S+@\S+$/i,
+                                        message: "El correo electrónico no es válido"
+                                    }
+                                })}
                             />
+                            {errors.email && (
+                                <p className={styles.color}>{errors.email.message}</p>
+                            )}
                             <label htmlFor="password">Contraseña</label>
                             <div className={styles.passdiv}>
                                 <button
@@ -144,11 +182,20 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
                                            width={10}
                                            alt="show"/>}</button>
                                 <input
-                                    className={`${styles.input} ${errors.password ? styles.error : ''} `}
-                                    type={showPassword ? 'text' : 'password'}
                                     id="password"
-                                    {...register("password", {required: true, minLength: 3})}
+                                    className={`${styles.input} ${errors.password ? styles.error : ''}`}
+                                    type={showPassword ? 'text' : 'password'}
+                                    {...register("password", {
+                                        required: "La contraseña es obligatoria",
+                                        minLength: {
+                                            value: 3,
+                                            message: "La contraseña debe tener al menos 3 caracteres"
+                                        }
+                                    })}
                                 />
+                                {errors.password && (
+                                    <p className={styles.color}>{errors.password.message}</p>
+                                )}
                             </div>
                         </>
                     )
@@ -157,21 +204,49 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
                 <label htmlFor="age">Edad</label>
                 <input
                     min={6}
-                    className={`${styles.input} ${errors.age ? styles.error : ''} `}
+                    id="age"
+                    className={`${styles.input} ${errors.age ? styles.error : ''}`}
                     type="number"
-                    {...register("age", {required: false, min: 6})}
+                    {...register("age", {
+                        required: false, // No es obligatorio, por lo que no necesitas un mensaje para required
+                        min: {
+                            value: 6,
+                            message: "La edad debe ser al menos 6 años"
+                        }
+                    })}
                 />
+                {errors.age && (
+                    <p className={styles.color}>{errors.age.message}</p>
+                )}
 
                 <label htmlFor="grade">Grado</label>
                 <input
-                    className={`${styles.range} ${errors.grade ? styles.error : ''} `}
+                    id="grade"
+                    className={`${styles.range} ${errors.grade ? styles.error : ''}`}
                     type="range"
                     min={1}
                     max={5}
                     defaultValue={1}
-                    {...register("grade", {required: false, min: 1, max: 5})}
+                    {...register("grade", {
+                        required: false,
+                        min: {
+                            value: 1,
+                            message: "El grado debe ser al menos 1"
+                        },
+                        max: {
+                            value: 5,
+                            message: "El grado no puede ser mayor que 5"
+                        }
+                    })}
                 />
+                {errors.grade && (
+                    <p className={styles.color}>{errors.grade.message}</p>
+                )}
                 <span className={styles.range}>{grade}</span>
+
+                {
+                    <span className="text-red-500">{errorMessage}</span>
+                }
 
                 <button
                     className={styles.buttonIngresar}>

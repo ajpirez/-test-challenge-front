@@ -10,7 +10,6 @@ import Image from "next/image";
 
 const LoginForm = () => {
     const {
-        error,
         setError
     } = useContext(ErrorContext)
     const [showPassword, setShowPassword] = useState(false)
@@ -68,7 +67,6 @@ const LoginForm = () => {
             >
                 {state === "CredentialsSignin" && (
                     <div className={styles.divCredentials}>
-                        {/*<IoInformationOutline className="h-5 w-5 text-red-500"/>*/}
                         <p className={styles.p}>Invalid credentials</p>
                     </div>
                 )}

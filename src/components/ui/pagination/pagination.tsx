@@ -3,7 +3,6 @@ import Link from "next/link";
 import {redirect, usePathname, useSearchParams} from "next/navigation";
 import styles from '../../styles/pagination.module.scss';
 import {generatePaginationNumbers} from "@/lib/utils";
-import {useContext, useEffect} from "react";
 
 
 export const Pagination = ({totalPages, totalElements, lastPage}: {

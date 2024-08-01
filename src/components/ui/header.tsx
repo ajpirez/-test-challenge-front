@@ -9,7 +9,7 @@ const Header = () => {
 
     return (
         <div className={styles.header}>
-            <h2>Manage <span>Students</span></h2>
+            <h2 className={styles.h2}>Manage <span>Students</span></h2>
             <div className={styles.actions}>
                 <button onClick={() => setModalOpen('delete')}
                         className={styles.delete}><Image src="/minus.png"

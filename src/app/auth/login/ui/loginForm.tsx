@@ -6,21 +6,24 @@ import {useContext, useEffect, useState} from "react"
 import {authenticate} from "@/lib/actions/auth/login";
 import styles from './styles/LoginForm.module.scss'
 import {ErrorContext} from "@/components/providers/Providers";
+import Image from "next/image";
 
 const LoginForm = () => {
     const {
+        error,
         setError
     } = useContext(ErrorContext)
     const [showPassword, setShowPassword] = useState(false)
-    const [state, dispatch] = useFormState(authenticate, undefined)
+    let [state, dispatch] = useFormState(authenticate, undefined)
 
 
     useEffect(() => {
         if (state === "Success") {
             window.location.replace('/')
-        }else {
+        } else {
             setError(state)
         }
+
     }, [setError, state]);
 
 
@@ -41,7 +44,15 @@ const LoginForm = () => {
                 <button
                     className={styles.button}
                     type="button"
-                    onClick={() => setShowPassword(show => !show)}>{showPassword ? 'hidde' : 'show'}</button>
+                    onClick={() => setShowPassword(show => !show)}>{showPassword ?
+                    <Image src="/hiden.png"
+                                                                                          height={10}
+                                                                                          width={10}
+                                                                                          alt="hide"/> :
+                    <Image src="/ojo.png"
+                           height={10}
+                           width={10}
+                           alt="show"/>}</button>
                 <input
                     className={styles.input}
                     type={showPassword ? 'text' : 'password'}

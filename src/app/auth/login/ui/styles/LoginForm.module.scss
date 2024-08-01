@@ -30,7 +30,7 @@
 
 .button {
   position: absolute;
-  top: 0.5rem;
+  top: 0.6rem;
   right: 2rem;
   color: $black-color;
 }
@@ -53,16 +53,30 @@
 }
 
 .buttonIngresar {
-  color: $primary-color;
+  color: $white-color;
   text-align: center;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: $gray-color-medium;
+  border: 1px solid $primary-color;
 }
 
 .primary {
-  color: $primary-color;
+  color: $white-color;
+  text-align: center;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: $gray-color-medium;
+  border: 1px solid $primary-color;
 }
 
 .secondary {
-  color: $secondary-color;
+  color: $confirm-color;
+  text-align: center;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: $gray-color-medium;
+  border: 1px solid $primary-color;
 }
 
 .divCredentials {

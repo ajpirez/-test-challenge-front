@@ -12,6 +12,7 @@ import {ErrorContext, LoaderContext, ModalContext} from "@/components/providers/
 import {editUser} from "@/lib/actions/auth/edit";
 import {useMounted} from "@/components/hooks/useMounted";
 import {useRouter} from "next/navigation";
+import Image from "next/image";
 
 type FormInputs = {
     id?: string
@@ -86,7 +87,6 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
         }
         reset();
         if (type === 'register') {
-            console.log(type)
             await login(email.toLowerCase(), password)
             window.location.replace('/')
         } else {
@@ -134,7 +134,15 @@ const UserGenericForm = ({type, externalData}: { type?: 'add' | 'edit' | 'regist
                                 <button
                                     className={styles.button}
                                     type="button"
-                                    onClick={() => setShowPassword(show => !show)}>{showPassword ? 'hidde' : 'show'}</button>
+                                    onClick={() => setShowPassword(show => !show)}>{showPassword ?
+                                    <Image src="/hiden.png"
+                                           height={10}
+                                           width={10}
+                                           alt="hide"/> :
+                                    <Image src="/ojo.png"
+                                           height={10}
+                                           width={10}
+                                           alt="show"/>}</button>
                                 <input
                                     className={`${styles.input} ${errors.password ? styles.error : ''} `}
                                     type={showPassword ? 'text' : 'password'}

@@ -12,7 +12,7 @@ function StudentInfo({user}: { user: User }) {
                 Back
             </button>
             <div className={styles.main}>
-                <h1 className={styles.name}>{user.firstName} {user.lastName}</h1>
+                <h5 className={`${styles.name} ${styles.h5}`}>{user.firstName} {user.lastName}</h5>
                 <p className={styles.email}>Email: {user.email}</p>
                 <p className={styles.age}>Age: {user.age}</p>
                 <p className={styles.grade}>Grade: {user.grade}</p>

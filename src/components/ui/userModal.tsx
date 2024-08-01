@@ -49,7 +49,7 @@ function UserModal() {
                     width={32}
                     height={32}
                 />
-                <h2 className={styles.title}>{modalContent[modalOpen as ModalType]?.title}</h2>
+                <h2 className={`${styles.title} ${styles.h2}`}>{modalContent[modalOpen as ModalType]?.title}</h2>
                 {modalContent[modalOpen as ModalType]?.content}
             </div>
         </div>

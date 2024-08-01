@@ -25,7 +25,8 @@ const ErrorTooltip = () => {
 
     return (
         <div className={styles.container}>
-            <h4 className={styles.element}>{error}</h4>
+            <h4 className={`${styles.element} ${styles.h4
+            }`}>{error}</h4>
         </div>
     );
 };

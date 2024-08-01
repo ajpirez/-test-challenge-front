@@ -7,25 +7,28 @@ import {redirect} from "next/navigation";
 interface Props {
     params: {
         id: string
+    },
+    searchParams: {
+        page: string
     }
 }
 
-export default async function Student({params: {id}}: Props) {
+export default async function Student({params: {id}, searchParams: {page}}: Props) {
 
     const session = await auth()
-    if(!session?.user){
+    if (!session?.user) {
         redirect('/')
     }
     const user = await getStudent({
         id
     })
 
-
     if (!user.success) {
         redirect('/')
     }
 
     return (
-        <StudentInfo user={user.data as User}/>
+        <StudentInfo user={user.data as User}
+                     page={page}/>
     );
 }

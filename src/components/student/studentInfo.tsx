@@ -4,11 +4,11 @@ import styles from '../styles/StudentInfo.module.scss';
 import {User} from "@/lib/interfaces/userLogin.interface";
 import {useRouter} from "next/navigation";
 
-function StudentInfo({user}: { user: User }) {
+function StudentInfo({user,page}: { user: User,page:string }) {
     const router = useRouter();
     return (
         <div className={styles.container}>
-            <button className={styles.button} onClick={() => router.push('/')}>
+            <button className={styles.button} onClick={() => router.push(`/?page=${page}`)}>
                 Back
             </button>
             <div className={styles.main}>

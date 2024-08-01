@@ -17,7 +17,8 @@ export default async function Page(props: { params: {}; searchParams: { page: st
         <main>
             <HandleSignOut status={users?.status ?? 200}/>
             <Header/>
-            <EmployeeTable users={users?.data?.elements ?? []}/>
+            <EmployeeTable users={users?.data?.elements ?? []}
+                           page={props.searchParams.page}/>
             <Pagination totalPages={users?.data?.paginationResult?.totalElements ?? 0}
                         totalElements={users?.data?.elements?.length ?? 0}
                         lastPage={users?.data?.paginationResult?.lastPage ?? 1}/>

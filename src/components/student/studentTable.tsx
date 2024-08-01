@@ -8,7 +8,7 @@ import {User} from "@/lib/interfaces/userLogin.interface";
 import {useSession} from "next-auth/react";
 import Link from "next/link";
 
-const EmployeeTable = ({users}: { users: Element[] }) => {
+const EmployeeTable = ({users, page}: { users: Element[], page:string }) => {
     const {data: session, status} = useSession();
     const {setModalOpen, setStudent,selectedIdUsers,setSelectedIdUsers} = useContext(ModalContext)
 
@@ -77,7 +77,7 @@ const EmployeeTable = ({users}: { users: Element[] }) => {
                                 )
                             }
                         </td>
-                        <td className={styles.truncate}><Link href={`/student/${user._id}`}>{user.firstName}</Link></td>
+                        <td className={styles.truncate}><Link href={`/student/${user._id}?page=${!page ? '1': page }`}>{user.firstName}</Link></td>
                         <td className={styles.truncate}>{user.lastName}</td>
                         <td>{user.email}</td>
                         <td>{user.age}</td>

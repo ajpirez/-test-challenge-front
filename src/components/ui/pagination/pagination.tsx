@@ -4,7 +4,6 @@ import {redirect, usePathname, useSearchParams} from "next/navigation";
 import styles from '../../styles/pagination.module.scss';
 import {generatePaginationNumbers} from "@/lib/utils";
 import {useContext, useEffect} from "react";
-import {PaginationContext} from "@/components/providers/Providers";
 
 
 export const Pagination = ({totalPages, totalElements, lastPage}: {
@@ -12,16 +11,9 @@ export const Pagination = ({totalPages, totalElements, lastPage}: {
     totalElements: number,
     lastPage: number
 }) => {
-    const {setTotalPages, setTotalElements} = useContext(PaginationContext)
 
     const pathName = usePathname();
     const searchParams = useSearchParams();
-
-
-    useEffect(() => {
-        setTotalPages(totalPages)
-        setTotalElements(totalElements)
-    }, [setTotalElements, setTotalPages, totalElements, totalPages]);
 
 
     const pageString = searchParams.get('page') ?? '1';

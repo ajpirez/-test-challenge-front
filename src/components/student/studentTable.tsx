@@ -1,16 +1,25 @@
 'use client'
 import styles from '../styles/studentTable.module.scss';
 import {Element} from "@/lib/interfaces/userResponse";
-import {useContext} from "react";
-import {ModalContext, PaginationContext} from "@/components/providers/Providers";
+import {useContext, useEffect} from "react";
+import {ModalContext} from "@/components/providers/Providers";
 import Image from "next/image";
 import {User} from "@/lib/interfaces/userLogin.interface";
 import {useSession} from "next-auth/react";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
-const EmployeeTable = ({users, page}: { users: Element[], page:string }) => {
+const EmployeeTable = ({users, page}: { users: Element[], page: string }) => {
+    const router = useRouter()
     const {data: session, status} = useSession();
-    const {setModalOpen, setStudent,selectedIdUsers,setSelectedIdUsers} = useContext(ModalContext)
+    const {setModalOpen, setStudent, selectedIdUsers, setSelectedIdUsers} = useContext(ModalContext)
+
+
+    useEffect(() => {
+        if (!users.length) {
+            router.replace(`/?page=${+page === 1 ? 1 : +page - 1}`)
+        }
+    }, [page, router, users]);
 
     const handleEdit = (user: User) => {
         setStudent(user)
@@ -23,7 +32,7 @@ const EmployeeTable = ({users, page}: { users: Element[], page:string }) => {
     }
     const handleSelectAll = () => {
         const filteredUsers = users.filter(user => user._id !== session?.user._id);
-        if (selectedIdUsers.length === filteredUsers.length  ) {
+        if (selectedIdUsers.length === filteredUsers.length) {
             setSelectedIdUsers([]);
         } else {
             setSelectedIdUsers(filteredUsers.map(user => user._id));
@@ -77,7 +86,8 @@ const EmployeeTable = ({users, page}: { users: Element[], page:string }) => {
                                 )
                             }
                         </td>
-                        <td className={styles.truncate}><Link href={`/student/${user._id}?page=${!page ? '1': page }`}>{user.firstName}</Link></td>
+                        <td className={styles.truncate}>
+                            <Link href={`/student/${user._id}?page=${!page ? '1' : page}`}>{user.firstName}</Link></td>
                         <td className={styles.truncate}>{user.lastName}</td>
                         <td>{user.email}</td>
                         <td>{user.age}</td>
